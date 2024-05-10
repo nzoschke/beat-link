@@ -1,6 +1,6 @@
 package org.deepsymmetry.beatlink;
 
-import java.awt.Color;
+// import java.awt.Color;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -561,141 +561,141 @@ public class Util {
      *
      * @return a color with hue components from hueColor and alpha from alphaColor
      */
-    public static Color buildColor(Color hueColor, Color alphaColor) {
-        return new Color(hueColor.getRed(), hueColor.getGreen(), hueColor.getBlue(), alphaColor.getAlpha());
+    public static MyColor buildColor(MyColor hueColor, MyColor alphaColor) {
+        return new MyColor(hueColor.getRed(), hueColor.getGreen(), hueColor.getBlue(), alphaColor.getAlpha());
     }
 
     /**
      * The color of an intro phrase in a track with a low mood.
      */
-    public static final Color LOW_INTRO_COLOR = new Color(255, 170, 180);
+    public static final MyColor LOW_INTRO_COLOR = new MyColor(255, 170, 180);
 
     /**
      * The color of a verse 1 phrase in a track with a low mood.
      */
-    public static final Color LOW_VERSE_1_COLOR = new Color(165, 160, 255);
+    public static final MyColor LOW_VERSE_1_COLOR = new MyColor(165, 160, 255);
 
     /**
      * The color of a verse 2 phrase in a track with a low mood.
      */
-    public static final Color LOW_VERSE_2_COLOR = new Color(190, 160, 255);
+    public static final MyColor LOW_VERSE_2_COLOR = new MyColor(190, 160, 255);
 
     /**
      * The color of a bridge phrase in a track with a low mood.
      */
-    public static final Color LOW_BRIDGE_COLOR = new Color(255, 250, 165);
+    public static final MyColor LOW_BRIDGE_COLOR = new MyColor(255, 250, 165);
 
     /**
      * The color of a chorus phrase in a track with a low mood.
      */
-    public static final Color LOW_CHORUS_COLOR = new Color(185, 225, 185);
+    public static final MyColor LOW_CHORUS_COLOR = new MyColor(185, 225, 185);
 
     /**
      * The color of an outro phrase in a track with a low mood.
      */
-    public static final Color LOW_OUTRO_COLOR = new Color(145, 160, 180);
+    public static final MyColor LOW_OUTRO_COLOR = new MyColor(145, 160, 180);
 
 
     /**
      * The color of an intro phrase in a track with a mid mood.
      */
-    public static final Color MID_INTRO_COLOR = new Color(225, 70, 70);
+    public static final MyColor MID_INTRO_COLOR = new MyColor(225, 70, 70);
 
     /**
      * The color of a verse 1 phrase in a track with a mid mood.
      */
-    public static final Color MID_VERSE_1_COLOR = new Color(80, 110, 255);
+    public static final MyColor MID_VERSE_1_COLOR = new MyColor(80, 110, 255);
 
     /**
      * The color of a verse 2 phrase in a track with a mid mood.
      */
-    public static final Color MID_VERSE_2_COLOR = new Color(80, 85, 255);
+    public static final MyColor MID_VERSE_2_COLOR = new MyColor(80, 85, 255);
 
     /**
      * The color of a verse 3 phrase in a track with a mid mood.
      */
-    public static final Color MID_VERSE_3_COLOR = new Color(100, 80, 255);
+    public static final MyColor MID_VERSE_3_COLOR = new MyColor(100, 80, 255);
 
     /**
      * The color of a verse 4 phrase in a track with a mid mood.
      */
-    public static final Color MID_VERSE_4_COLOR = new Color(120, 80, 255);
+    public static final MyColor MID_VERSE_4_COLOR = new MyColor(120, 80, 255);
 
     /**
      * The color of a verse 5 phrase in a track with a mid mood.
      */
-    public static final Color MID_VERSE_5_COLOR = new Color(140, 80, 255);
+    public static final MyColor MID_VERSE_5_COLOR = new MyColor(140, 80, 255);
 
     /**
      * The color of a verse 6 phrase in a track with a mid mood.
      */
-    public static final Color MID_VERSE_6_COLOR = new Color(160, 80, 255);
+    public static final MyColor MID_VERSE_6_COLOR = new MyColor(160, 80, 255);
 
     /**
      * The color of a bridge phrase in a track with a mid mood.
      */
-    public static final Color MID_BRIDGE_COLOR = new Color(225, 215, 65);
+    public static final MyColor MID_BRIDGE_COLOR = new MyColor(225, 215, 65);
 
     /**
      * The color of a chorus phrase in a track with a mid mood.
      */
-    public static final Color MID_CHORUS_COLOR = new Color(120, 195, 125);
+    public static final MyColor MID_CHORUS_COLOR = new MyColor(120, 195, 125);
 
     /**
      * The color of an outro phrase in a track with a mid mood.
      */
-    public static final Color MID_OUTRO_COLOR = new Color(115, 130, 150);
+    public static final MyColor MID_OUTRO_COLOR = new MyColor(115, 130, 150);
 
 
     /**
      * The color of an intro 1 phrase in a track with a high mood.
      */
-    public static final Color HIGH_INTRO_1_COLOR = new Color(200, 0, 0);
+    public static final MyColor HIGH_INTRO_1_COLOR = new MyColor(200, 0, 0);
 
     /**
      * The color of an intro 2 phrase in a track with a high mood.
      */
-    public static final Color HIGH_INTRO_2_COLOR = new Color(200, 50, 0);
+    public static final MyColor HIGH_INTRO_2_COLOR = new MyColor(200, 50, 0);
 
     /**
      * The color of an up 1 phrase in a track with a high mood.
      */
-    public static final Color HIGH_UP_1_COLOR = new Color(140, 50, 255);
+    public static final MyColor HIGH_UP_1_COLOR = new MyColor(140, 50, 255);
 
     /**
      * The color of an up 2 phrase in a track with a high mood.
      */
-    public static final Color HIGH_UP_2_COLOR = new Color(105, 50, 255);
+    public static final MyColor HIGH_UP_2_COLOR = new MyColor(105, 50, 255);
 
     /**
      * The color of an up 3 phrase in a track with a high mood.
      */
-    public static final Color HIGH_UP_3_COLOR = new Color(90, 50, 255);
+    public static final MyColor HIGH_UP_3_COLOR = new MyColor(90, 50, 255);
 
     /**
      * The color of a down phrase in a track with a high mood.
      */
-    public static final Color HIGH_DOWN_COLOR = new Color(155, 115, 45);
+    public static final MyColor HIGH_DOWN_COLOR = new MyColor(155, 115, 45);
 
     /**
      * The color of a chorus 1 phrase in a track with a high mood.
      */
-    public static final Color HIGH_CHORUS_1_COLOR = new Color(15, 170, 0);
+    public static final MyColor HIGH_CHORUS_1_COLOR = new MyColor(15, 170, 0);
 
     /**
      * The color of a chorus 2 phrase in a track with a high mood.
      */
-    public static final Color HIGH_CHORUS_2_COLOR = new Color(15, 170, 0);
+    public static final MyColor HIGH_CHORUS_2_COLOR = new MyColor(15, 170, 0);
 
     /**
      * The color of an outro 1 phrase in a track with a high mood.
      */
-    public static final Color HIGH_OUTRO_1_COLOR = new Color(80, 135, 195);
+    public static final MyColor HIGH_OUTRO_1_COLOR = new MyColor(80, 135, 195);
 
     /**
      * The color of an outro 2 phrase in a track with a high mood.
      */
-    public static final Color HIGH_OUTRO_2_COLOR = new Color(95, 135, 175);
+    public static final MyColor HIGH_OUTRO_2_COLOR = new MyColor(95, 135, 175);
 
 
     /**
@@ -705,13 +705,13 @@ public class Util {
      *
      * @return the color with which to paint the box that identifies the phrase
      */
-    public static Color phraseColor(final SongStructureEntry phrase) {
+    public static MyColor phraseColor(final SongStructureEntry phrase) {
 
         switch (phrase._parent().mood()) {
 
             case LOW:
                 final RekordboxAnlz.PhraseLow phraseLow = (RekordboxAnlz.PhraseLow)phrase.kind();
-                if (phraseLow == null) return Color.white;  // We don't recognize this phrase.
+                if (phraseLow == null) return MyColor.white;  // We don't recognize this phrase.
 
                 switch (phraseLow.id()) {
                     case INTRO:
@@ -739,7 +739,7 @@ public class Util {
 
             case MID:
                 final RekordboxAnlz.PhraseMid phraseMid = (RekordboxAnlz.PhraseMid)phrase.kind();
-                if (phraseMid == null) return Color.white;  // We don't recognize this phrase.
+                if (phraseMid == null) return MyColor.white;  // We don't recognize this phrase.
 
                 switch (phraseMid.id()) {
                     case INTRO:
@@ -775,7 +775,7 @@ public class Util {
 
             case HIGH:
                 final RekordboxAnlz.PhraseHigh phraseHigh = (RekordboxAnlz.PhraseHigh)phrase.kind();
-                if (phraseHigh == null) return Color.white;  // We don't recognize this phrase.
+                if (phraseHigh == null) return MyColor.white;  // We don't recognize this phrase.
 
                 switch (phraseHigh.id()) {
                     case INTRO:
@@ -810,7 +810,7 @@ public class Util {
                 }
 
             default:
-                return Color.WHITE;  // We don't recognize this mood.
+                return MyColor.white;  // We don't recognize this mood.
         }
     }
 
@@ -821,11 +821,11 @@ public class Util {
      *
      * @return the color that should be used for painting the label
      */
-    public static Color phraseTextColor(final SongStructureEntry phrase) {
+    public static MyColor phraseTextColor(final SongStructureEntry phrase) {
         if (phrase._parent().mood() == RekordboxAnlz.TrackMood.HIGH) {
-            return Color.white;
+            return MyColor.white;
         }
-        return Color.black;
+        return MyColor.black;
     }
 
     /**
