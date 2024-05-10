@@ -73,30 +73,6 @@ public interface MetadataProvider {
     CueList getCueList(MediaDetails sourceMedia, DataReference track);
 
     /**
-     * Get the waveform preview for a particular track, if it is available.
-     *
-     * @param sourceMedia the media to which the track belongs, for use by providers which store metadata from multiple
-     *                    sources
-     * @param track identifies the track whose waveform preview is desired; since beat grids always have a player and
-     *              slot associated with them, those are needed as well as the rekordbox ID in order to create one
-     *
-     * @return the waveform preview corresponding to that track, or {@code null} if we don't have one to offer
-     */
-    WaveformPreview getWaveformPreview(MediaDetails sourceMedia, DataReference track);
-
-    /**
-     * Get the waveform detail for a particular track, if it is available.
-     *
-     * @param sourceMedia the media to which the track belongs, for use by providers which store metadata from multiple
-     *                    sources
-     * @param track identifies the track whose waveform detail is desired; since beat grids always have a player and
-     *              slot associated with them, those are needed as well as the rekordbox ID in order to create one
-     *
-     * @return the waveform detail corresponding to that track, or {@code null} if we don't have one to offer
-     */
-    WaveformDetail getWaveformDetail(MediaDetails sourceMedia, DataReference track);
-
-    /**
      * Get an arbitrary analysis file element, given its file extension and type tag.
      *
      * @param sourceMedia the media to which the track belongs, for use by providers which store metadata from multiple

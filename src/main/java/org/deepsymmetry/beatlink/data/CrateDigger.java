@@ -589,60 +589,6 @@ public class CrateDigger {
         }
 
         @Override
-        public WaveformPreview getWaveformPreview(MediaDetails sourceMedia, DataReference track) {
-            Database database = findDatabase(track);
-            if (database != null) {
-                try {
-                    RekordboxAnlz file = findExtendedAnalysis(track, database);  // Look for color preview first
-                    if (file != null) {
-                        try {
-                            return new WaveformPreview(track, file);
-                        } finally {
-                            file._io().close();
-                        }
-                    }
-                } catch (IllegalStateException e) {
-                    logger.info("No color preview waveform found, checking for blue version.");
-                } catch (Exception e) {
-                    logger.error("Problem fetching color waveform preview for track " + track + " from database " + database, e);
-                }
-                try {
-                    RekordboxAnlz file = findTrackAnalysis(track, database);
-                    if (file != null) {
-                        try {
-                            return new WaveformPreview(track, file);
-                        } finally {
-                            file._io().close();
-                        }
-                    }
-                } catch (Exception e) {
-                    logger.error("Problem fetching waveform preview for track " + track + " from database " + database, e);
-                }
-            }
-            return null;
-        }
-
-        @Override
-        public WaveformDetail getWaveformDetail(MediaDetails sourceMedia, DataReference track) {
-            Database database = findDatabase(track);
-            if (database != null) {
-                try {
-                    RekordboxAnlz file = findExtendedAnalysis(track, database);
-                    if (file != null) {
-                        try {
-                            return new WaveformDetail(track, file);
-                        } finally {
-                            file._io().close();
-                        }
-                    }
-                } catch (Exception e) {
-                    logger.error("Problem fetching waveform preview for track " + track + " from database " + database, e);
-                }
-            }
-            return null;
-        }
-
-        @Override
         public RekordboxAnlz.TaggedSection getAnalysisSection(MediaDetails sourceMedia, DataReference track, String fileExtension, String typeTag) {
             Database database = findDatabase(track);
             if (database != null) {

@@ -915,40 +915,6 @@ public class MetadataFinder extends LifecycleParticipant {
         }
 
         @Override
-        public WaveformPreview getWaveformPreview(MediaDetails sourceMedia, DataReference track) {
-            for (MetadataProvider provider : getMetadataProviders(sourceMedia)) {
-                WaveformPreview result = provider.getWaveformPreview(sourceMedia, track);
-                if (result != null) {
-                    return result;
-                }
-            }
-            for (MetadataProvider provider : getMetadataProviders(null)) {
-                WaveformPreview result = provider.getWaveformPreview(sourceMedia, track);
-                if (result != null) {
-                    return result;
-                }
-            }
-            return null;
-        }
-
-        @Override
-        public WaveformDetail getWaveformDetail(MediaDetails sourceMedia, DataReference track) {
-            for (MetadataProvider provider : getMetadataProviders(sourceMedia)) {
-                WaveformDetail result = provider.getWaveformDetail(sourceMedia, track);
-                if (result != null) {
-                    return result;
-                }
-            }
-            for (MetadataProvider provider : getMetadataProviders(null)) {
-                WaveformDetail result = provider.getWaveformDetail(sourceMedia, track);
-                if (result != null) {
-                    return result;
-                }
-            }
-            return null;
-        }
-
-        @Override
         public RekordboxAnlz.TaggedSection getAnalysisSection(MediaDetails sourceMedia, DataReference track, String fileExtension, String typeTag) {
             for (MetadataProvider provider : getMetadataProviders(sourceMedia)) {
                 RekordboxAnlz.TaggedSection result = provider.getAnalysisSection(sourceMedia, track, fileExtension, typeTag);

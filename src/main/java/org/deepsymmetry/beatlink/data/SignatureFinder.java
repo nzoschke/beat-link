@@ -77,25 +77,6 @@ public class SignatureFinder extends LifecycleParticipant {
     };
 
     /**
-     * Our waveform listener updates our signature state as track waveforms come and go.
-     */
-    private final WaveformListener waveformListener = new WaveformListener() {
-        @Override
-        public void previewChanged(WaveformPreviewUpdate update) {
-            // We don’t do anything with previews
-        }
-
-        @Override
-        public void detailChanged(WaveformDetailUpdate update) {
-            if (update.detail == null) {
-                clearSignature(update.player);
-            } else {
-                checkIfSignatureReady(update.player);
-            }
-        }
-    };
-
-    /**
      * Our beat grid listener updates our signature state as track beat grids come and go.
      */
     private final BeatGridListener beatGridListener = new BeatGridListener() {
@@ -301,7 +282,7 @@ public class SignatureFinder extends LifecycleParticipant {
      * @return the SHA-1 hash of all the arguments supplied, or {@code null} if any either {@code waveFormDetail} or {@code beatGrid} were {@code null}
      */
     public String computeTrackSignature(final String title, final SearchableItem artist, final int duration,
-                                        final WaveformDetail waveformDetail, final BeatGrid beatGrid) {
+                                        final BeatGrid beatGrid) {
         final String safeTitle = (title == null)? "" : title;
         final String artistName = (artist == null)? "[no artist]" : artist.label;
         try {
@@ -312,7 +293,6 @@ public class SignatureFinder extends LifecycleParticipant {
             digest.update(artistName.getBytes("UTF-8"));
             digest.update((byte) 0);
             digestInteger(digest, duration);
-            digest.update(waveformDetail.getData());
             for (int i = 1; i <= beatGrid.beatCount; i++) {
                 digestInteger(digest, beatGrid.getBeatWithinBar(i));
                 digestInteger(digest, (int)beatGrid.getTimeWithinTrack(i));
@@ -344,11 +324,10 @@ public class SignatureFinder extends LifecycleParticipant {
      */
     private void handleUpdate(final int player) {
         final TrackMetadata metadata = MetadataFinder.getInstance().getLatestMetadataFor(player);
-        final WaveformDetail waveformDetail = WaveformFinder.getInstance().getLatestDetailFor(player);
         final BeatGrid beatGrid = BeatGridFinder.getInstance().getLatestBeatGridFor(player);
-        if (metadata != null && waveformDetail != null && beatGrid != null) {
+        if (metadata != null  && beatGrid != null) {
             final String signature = computeTrackSignature(metadata.getTitle(), metadata.getArtist(),
-                    metadata.getDuration(), waveformDetail, beatGrid);
+                    metadata.getDuration(), beatGrid);
             if (signature != null) {
                 signatures.put(player, signature);
                 deliverSignatureUpdate(player, signature);
@@ -370,11 +349,6 @@ public class SignatureFinder extends LifecycleParticipant {
             MetadataFinder.getInstance().addLifecycleListener(lifecycleListener);
             MetadataFinder.getInstance().start();
             MetadataFinder.getInstance().addTrackMetadataListener(metadataListener);
-
-            WaveformFinder.getInstance().addLifecycleListener(lifecycleListener);
-            WaveformFinder.getInstance().setFindDetails(true);
-            WaveformFinder.getInstance().start();
-            WaveformFinder.getInstance().addWaveformListener(waveformListener);
 
             BeatGridFinder.getInstance().addLifecycleListener(lifecycleListener);
             BeatGridFinder.getInstance().start();
@@ -407,7 +381,6 @@ public class SignatureFinder extends LifecycleParticipant {
     public synchronized void stop () {
         if (isRunning()) {
             MetadataFinder.getInstance().removeTrackMetadataListener(metadataListener);
-            WaveformFinder.getInstance().removeWaveformListener(waveformListener);
             BeatGridFinder.getInstance().removeBeatGridListener(beatGridListener);
             running.set(false);
             pendingUpdates.clear();
