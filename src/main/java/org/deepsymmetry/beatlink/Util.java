@@ -1,6 +1,5 @@
 package org.deepsymmetry.beatlink;
 
-// import java.awt.Color;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
