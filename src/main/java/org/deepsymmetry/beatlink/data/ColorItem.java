@@ -1,6 +1,7 @@
 package org.deepsymmetry.beatlink.data;
 
-import java.awt.Color;
+import org.deepsymmetry.beatlink.MyColor;
+
 
 /**
  * Represents a track color label. This is a specialized {@link SearchableItem}, since in addition to a specific color,
@@ -16,7 +17,7 @@ public class ColorItem extends SearchableItem {
     /**
      * The color that is represented by this item.
      */
-    public final Color color;
+    public final MyColor color;
 
     /**
      * The name of the color represented by this item, for textual display.
@@ -69,7 +70,7 @@ public class ColorItem extends SearchableItem {
      * @param color a color to be examined
      * @return {@code true} if the color represents the lack of a color assignment
      */
-    public static boolean isNoColor(Color color) {
+    public static boolean isNoColor(MyColor color) {
         return color.getAlpha() == 0;
     }
 
@@ -83,36 +84,36 @@ public class ColorItem extends SearchableItem {
      *
      * @return the color that should be displayed (or which the UI should be tinted with)
      */
-    public static Color colorForId(int colorId) {
+    public static MyColor colorForId(int colorId) {
         switch (colorId) {
 
             case 1:
-                return Color.PINK;
+                return MyColor.pink;
 
             case 2:
-                return Color.RED;
+                return MyColor.red;
 
             case 3:
-                return Color.ORANGE;
+                return MyColor.orange;
 
             case 4:
-                return Color.YELLOW;
+                return MyColor.yellow;
 
             case 5:
-                return Color.GREEN;
+                return MyColor.green;
 
             case 6:
-                return Color.CYAN;
+                return MyColor.cyan;
 
             case 7:
-                return Color.BLUE;
+                return MyColor.blue;
 
             case 8:
-                return new Color(128, 0, 128);
+                return new MyColor(128, 0, 128);
 
             case 0:
             default:
-                return new Color(0, 0, 0, 0);
+                return new MyColor(0, 0, 0, 0);
         }
     }
 

@@ -5,7 +5,6 @@ import org.deepsymmetry.beatlink.data.SlotReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.Color;
 import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.nio.ByteBuffer;
@@ -54,7 +53,7 @@ public class MediaDetails {
     /**
      * The color tint that should be applied to the user interface when a player mounts this media.
      */
-    public final Color color;
+    public final MyColor color;
 
     /**
      * Indicates that the DJ has stored device setting preferences on the media, so the player should display

@@ -1,6 +1,7 @@
 package org.deepsymmetry.beatlink.data;
 
 import io.kaitai.struct.ByteBufferKaitaiStream;
+import org.deepsymmetry.beatlink.MyColor;
 import org.deepsymmetry.beatlink.Util;
 import org.deepsymmetry.beatlink.dbserver.BinaryField;
 import org.deepsymmetry.beatlink.dbserver.Message;
@@ -9,7 +10,6 @@ import org.deepsymmetry.cratedigger.pdb.RekordboxAnlz;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.Color;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.*;
@@ -217,13 +217,13 @@ public class CueList {
         /**
          * The explicit color embedded into the hot cue, or {@code null} if there was none.
          */
-        public final Color embeddedColor;
+        public final MyColor embeddedColor;
 
         /**
          * The color with which this hot cue will be displayed in rekordbox, if it is a hot cue with a recognized
          * color code, or {@code null} if that does not apply.
          */
-        public final Color rekordboxColor;
+        public final MyColor rekordboxColor;
 
         /**
          * Constructor for non-loop memory point entries.
@@ -277,7 +277,7 @@ public class CueList {
          * @param embeddedColor the explicit color embedded in the hot cue, if any
          * @param rekordboxColor the color that rekordbox will display for this hot cue, if available
          */
-        public Entry(int number, long position, String comment, Color embeddedColor, Color rekordboxColor) {
+        public Entry(int number, long position, String comment, MyColor embeddedColor, MyColor rekordboxColor) {
             if (number == 0) throw new IllegalArgumentException("Hot cues must have non-zero numbers");
             if (comment == null) throw new NullPointerException("comment must not be null");
             hotCueNumber = number;
@@ -302,7 +302,7 @@ public class CueList {
          * @param embeddedColor the explicit color embedded in the cue, if any
          * @param rekordboxColor the color that rekordbox will display for this cue, if available
          */
-        public Entry(int number, long startPosition, long endPosition, String comment, Color embeddedColor, Color rekordboxColor) {
+        public Entry(int number, long startPosition, long endPosition, String comment, MyColor embeddedColor, MyColor rekordboxColor) {
             if (number == 0) throw new IllegalArgumentException("Hot cues must have non-zero numbers");
             if (comment == null) throw new NullPointerException("comment must not be null");
             hotCueNumber = number;
@@ -323,14 +323,14 @@ public class CueList {
          *
          * @return the color that represents this cue on players that don't support nxs2 colored cues.
          */
-        public Color getNexusColor() {
+        public MyColor getNexusColor() {
             if (hotCueNumber > 0) {
-                return Color.GREEN;
+                return MyColor.green;
             }
             if (isLoop) {
-                return Color.ORANGE;
+                return MyColor.orange;
             }
-            return Color.RED;
+            return MyColor.red;
         }
 
         /**
@@ -343,10 +343,10 @@ public class CueList {
          *
          * @return the most suitable available display color for the cue
          */
-        public Color getColor() {
+        public MyColor getColor() {
             // This is an ordinary memory point or loop.
             if (hotCueNumber == 0) {
-                final Color assigned = ColorItem.colorForId(colorId);
+                final MyColor assigned = ColorItem.colorForId(colorId);
                 if (ColorItem.isNoColor(assigned)) {
                     return getNexusColor();
                 }
@@ -489,9 +489,9 @@ public class CueList {
      * @param colorCode the first color byte
      * @return the color corresponding to the three bytes that are expected to follow it
      */
-    private Color expectedEmbeddedColor(int colorCode) {
+    private MyColor expectedEmbeddedColor(int colorCode) {
         if (colorCode == 0) {
-            return Color.green;  // The default green color used by older CDJs.
+            return MyColor.green;  // The default green color used by older CDJs.
         }
         return findRekordboxColor(colorCode);
     }
@@ -502,12 +502,12 @@ public class CueList {
      * @param entry the parsed cue entry
      * @return the embedded color value, or {@code null} if there is none present
      */
-    private Color findEmbeddedColor(RekordboxAnlz.CueExtendedEntry entry) {
+    private MyColor findEmbeddedColor(RekordboxAnlz.CueExtendedEntry entry) {
         if (entry.colorRed() == null || entry.colorGreen() == null || entry.colorBlue() == null ||
                 (entry.colorRed() == 0 && entry.colorGreen() == 0 && entry.colorBlue() == 0)) {
             return null;
         }
-        return new Color(entry.colorRed(), entry.colorGreen(), entry.colorBlue());
+        return new MyColor(entry.colorRed(), entry.colorGreen(), entry.colorBlue());
     }
 
     /**
@@ -517,70 +517,70 @@ public class CueList {
      * @param colorCode the color index found in the cue
      * @return the corresponding color or {@code null} if the index is not recognized
      */
-    public static Color findRekordboxColor(int colorCode) {
+    public static MyColor findRekordboxColor(int colorCode) {
         switch (colorCode) {
-            case 0x01: return new Color(0x30, 0x5a, 0xff);
-            case 0x02: return new Color(0x50, 0x73, 0xff);
-            case 0x03: return new Color(0x50, 0x8c, 0xff);
-            case 0x04: return new Color(0x50, 0xa0, 0xff);
-            case 0x05: return new Color(0x50, 0xb4, 0xff);
-            case 0x06: return new Color(0x50, 0xb0, 0xf2);
-            case 0x07: return new Color(0x50, 0xae, 0xe8);
-            case 0x08: return new Color(0x45, 0xac, 0xdb);
-            case 0x09: return new Color(0x00, 0xe0, 0xff);
-            case 0x0a: return new Color(0x19, 0xda, 0xf0);
-            case 0x0b: return new Color(0x32, 0xd2, 0xe6);
-            case 0x0c: return new Color(0x21, 0xb4, 0xb9);
-            case 0x0d: return new Color(0x20, 0xaa, 0xa0);
-            case 0x0e: return new Color(0x1f, 0xa3, 0x92);
-            case 0x0f: return new Color(0x19, 0xa0, 0x8c);
-            case 0x10: return new Color(0x14, 0xa5, 0x84);
-            case 0x11: return new Color(0x14, 0xaa, 0x7d);
-            case 0x12: return new Color(0x10, 0xb1, 0x76);
-            case 0x13: return new Color(0x30, 0xd2, 0x6e);
-            case 0x14: return new Color(0x37, 0xde, 0x5a);
-            case 0x15: return new Color(0x3c, 0xeb, 0x50);
-            case 0x16: return new Color(0x28, 0xe2, 0x14);
-            case 0x17: return new Color(0x7d, 0xc1, 0x3d);
-            case 0x18: return new Color(0x8c, 0xc8, 0x32);
-            case 0x19: return new Color(0x9b, 0xd7, 0x23);
-            case 0x1a: return new Color(0xa5, 0xe1, 0x16);
-            case 0x1b: return new Color(0xa5, 0xdc, 0x0a);
-            case 0x1c: return new Color(0xaa, 0xd2, 0x08);
-            case 0x1d: return new Color(0xb4, 0xc8, 0x05);
-            case 0x1e: return new Color(0xb4, 0xbe, 0x04);
-            case 0x1f: return new Color(0xba, 0xb4, 0x04);
-            case 0x20: return new Color(0xc3, 0xaf, 0x04);
-            case 0x21: return new Color(0xe1, 0xaa, 0x00);
-            case 0x22: return new Color(0xff, 0xa0, 0x00);
-            case 0x23: return new Color(0xff, 0x96, 0x00);
-            case 0x24: return new Color(0xff, 0x8c, 0x00);
-            case 0x25: return new Color(0xff, 0x75, 0x00);
-            case 0x26: return new Color(0xe0, 0x64, 0x1b);
-            case 0x27: return new Color(0xe0, 0x46, 0x1e);
-            case 0x28: return new Color(0xe0, 0x30, 0x1e);
-            case 0x29: return new Color(0xe0, 0x28, 0x23);
-            case 0x2a: return new Color(0xe6, 0x28, 0x28);
-            case 0x2b: return new Color(0xff, 0x37, 0x6f);
-            case 0x2c: return new Color(0xff, 0x2d, 0x6f);
-            case 0x2d: return new Color(0xff, 0x12, 0x7b);
-            case 0x2e: return new Color(0xf5, 0x1e, 0x8c);
-            case 0x2f: return new Color(0xeb, 0x2d, 0xa0);
-            case 0x30: return new Color(0xe6, 0x37, 0xb4);
-            case 0x31: return new Color(0xde, 0x44, 0xcf);
-            case 0x32: return new Color(0xde, 0x44, 0x8d);
-            case 0x33: return new Color(0xe6, 0x30, 0xb4);
-            case 0x34: return new Color(0xe6, 0x19, 0xdc);
-            case 0x35: return new Color(0xe6, 0x00, 0xff);
-            case 0x36: return new Color(0xdc, 0x00, 0xff);
-            case 0x37: return new Color(0xcc, 0x00, 0xff);
-            case 0x38: return new Color(0xb4, 0x32, 0xff);
-            case 0x39: return new Color(0xb9, 0x3c, 0xff);
-            case 0x3a: return new Color(0xc5, 0x42, 0xff);
-            case 0x3b: return new Color(0xaa, 0x5a, 0xff);
-            case 0x3c: return new Color(0xaa, 0x72, 0xff);
-            case 0x3d: return new Color(0x82, 0x72, 0xff);
-            case 0x3e: return new Color(0x64, 0x73, 0xff);
+            case 0x01: return new MyColor(0x30, 0x5a, 0xff);
+            case 0x02: return new MyColor(0x50, 0x73, 0xff);
+            case 0x03: return new MyColor(0x50, 0x8c, 0xff);
+            case 0x04: return new MyColor(0x50, 0xa0, 0xff);
+            case 0x05: return new MyColor(0x50, 0xb4, 0xff);
+            case 0x06: return new MyColor(0x50, 0xb0, 0xf2);
+            case 0x07: return new MyColor(0x50, 0xae, 0xe8);
+            case 0x08: return new MyColor(0x45, 0xac, 0xdb);
+            case 0x09: return new MyColor(0x00, 0xe0, 0xff);
+            case 0x0a: return new MyColor(0x19, 0xda, 0xf0);
+            case 0x0b: return new MyColor(0x32, 0xd2, 0xe6);
+            case 0x0c: return new MyColor(0x21, 0xb4, 0xb9);
+            case 0x0d: return new MyColor(0x20, 0xaa, 0xa0);
+            case 0x0e: return new MyColor(0x1f, 0xa3, 0x92);
+            case 0x0f: return new MyColor(0x19, 0xa0, 0x8c);
+            case 0x10: return new MyColor(0x14, 0xa5, 0x84);
+            case 0x11: return new MyColor(0x14, 0xaa, 0x7d);
+            case 0x12: return new MyColor(0x10, 0xb1, 0x76);
+            case 0x13: return new MyColor(0x30, 0xd2, 0x6e);
+            case 0x14: return new MyColor(0x37, 0xde, 0x5a);
+            case 0x15: return new MyColor(0x3c, 0xeb, 0x50);
+            case 0x16: return new MyColor(0x28, 0xe2, 0x14);
+            case 0x17: return new MyColor(0x7d, 0xc1, 0x3d);
+            case 0x18: return new MyColor(0x8c, 0xc8, 0x32);
+            case 0x19: return new MyColor(0x9b, 0xd7, 0x23);
+            case 0x1a: return new MyColor(0xa5, 0xe1, 0x16);
+            case 0x1b: return new MyColor(0xa5, 0xdc, 0x0a);
+            case 0x1c: return new MyColor(0xaa, 0xd2, 0x08);
+            case 0x1d: return new MyColor(0xb4, 0xc8, 0x05);
+            case 0x1e: return new MyColor(0xb4, 0xbe, 0x04);
+            case 0x1f: return new MyColor(0xba, 0xb4, 0x04);
+            case 0x20: return new MyColor(0xc3, 0xaf, 0x04);
+            case 0x21: return new MyColor(0xe1, 0xaa, 0x00);
+            case 0x22: return new MyColor(0xff, 0xa0, 0x00);
+            case 0x23: return new MyColor(0xff, 0x96, 0x00);
+            case 0x24: return new MyColor(0xff, 0x8c, 0x00);
+            case 0x25: return new MyColor(0xff, 0x75, 0x00);
+            case 0x26: return new MyColor(0xe0, 0x64, 0x1b);
+            case 0x27: return new MyColor(0xe0, 0x46, 0x1e);
+            case 0x28: return new MyColor(0xe0, 0x30, 0x1e);
+            case 0x29: return new MyColor(0xe0, 0x28, 0x23);
+            case 0x2a: return new MyColor(0xe6, 0x28, 0x28);
+            case 0x2b: return new MyColor(0xff, 0x37, 0x6f);
+            case 0x2c: return new MyColor(0xff, 0x2d, 0x6f);
+            case 0x2d: return new MyColor(0xff, 0x12, 0x7b);
+            case 0x2e: return new MyColor(0xf5, 0x1e, 0x8c);
+            case 0x2f: return new MyColor(0xeb, 0x2d, 0xa0);
+            case 0x30: return new MyColor(0xe6, 0x37, 0xb4);
+            case 0x31: return new MyColor(0xde, 0x44, 0xcf);
+            case 0x32: return new MyColor(0xde, 0x44, 0x8d);
+            case 0x33: return new MyColor(0xe6, 0x30, 0xb4);
+            case 0x34: return new MyColor(0xe6, 0x19, 0xdc);
+            case 0x35: return new MyColor(0xe6, 0x00, 0xff);
+            case 0x36: return new MyColor(0xdc, 0x00, 0xff);
+            case 0x37: return new MyColor(0xcc, 0x00, 0xff);
+            case 0x38: return new MyColor(0xb4, 0x32, 0xff);
+            case 0x39: return new MyColor(0xb9, 0x3c, 0xff);
+            case 0x3a: return new MyColor(0xc5, 0x42, 0xff);
+            case 0x3b: return new MyColor(0xaa, 0x5a, 0xff);
+            case 0x3c: return new MyColor(0xaa, 0x72, 0xff);
+            case 0x3d: return new MyColor(0x82, 0x72, 0xff);
+            case 0x3e: return new MyColor(0x64, 0x73, 0xff);
 
             case 0x00:  // none, use default color
                 return null;
@@ -608,10 +608,10 @@ public class CueList {
                     entries.add(new Entry(Util.timeToHalfFrame(cueEntry.time()), comment, cueEntry.colorId()));
                 }
             } else {  // This is a hot cue or loop.
-                final Color embeddedColor = findEmbeddedColor(cueEntry);
+                final MyColor embeddedColor = findEmbeddedColor(cueEntry);
                 final int colorCode = cueEntry.colorCode() == null? 0 : cueEntry.colorCode();
-                final Color expectedColor = expectedEmbeddedColor(colorCode);
-                final Color rekordboxColor = findRekordboxColor(colorCode);
+                final MyColor expectedColor = expectedEmbeddedColor(colorCode);
+                final MyColor rekordboxColor = findRekordboxColor(colorCode);
                 if (((embeddedColor == null && expectedColor != null) ||
                         (embeddedColor != null && !embeddedColor.equals(expectedColor))) &&
                         (colorCode != 0 || embeddedColor != null)) {
@@ -809,9 +809,9 @@ public class CueList {
                     final int red = safelyFetchColorByte(entryBytes, offset + commentSize + 0x4f);
                     final int green = safelyFetchColorByte(entryBytes, offset + commentSize + 0x50);
                     final int blue = safelyFetchColorByte(entryBytes, offset + commentSize + 0x51);
-                    final Color rekordboxColor = findRekordboxColor(colorCode);
-                    final Color expectedColor = expectedEmbeddedColor(colorCode);
-                    final Color embeddedColor = (red == 0 && green == 0 && blue == 0) ? null : new Color(red, green, blue);
+                    final MyColor rekordboxColor = findRekordboxColor(colorCode);
+                    final MyColor expectedColor = expectedEmbeddedColor(colorCode);
+                    final MyColor embeddedColor = (red == 0 && green == 0 && blue == 0) ? null : new MyColor(red, green, blue);
                     if (((embeddedColor == null && expectedColor != null) ||
                             (embeddedColor != null && !embeddedColor.equals(expectedColor))) &&
                             (colorCode != 0 || embeddedColor != null)) {

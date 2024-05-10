@@ -5,6 +5,13 @@ public class MyColor {
 
   public static final MyColor white     = new MyColor(255, 255, 255);
   public static final MyColor black     = new MyColor(0, 0, 0);
+  public static final MyColor pink      = new MyColor(255, 175, 175);
+  public static final MyColor red       = new MyColor(255, 0, 0);
+  public static final MyColor orange    = new MyColor(255, 200, 0);
+  public static final MyColor yellow    = new MyColor(255, 255, 0);
+  public static final MyColor green     = new MyColor(0, 255, 0);
+  public static final MyColor cyan      = new MyColor(0, 255, 255);
+  public static final MyColor blue      = new MyColor(0, 0, 255);
 
   public MyColor(int r, int g, int b) {
     this.color = new java.awt.Color(r, g, b);
