@@ -6,7 +6,7 @@ import org.deepsymmetry.beatlink.dbserver.Message;
 import org.deepsymmetry.cratedigger.pdb.RekordboxAnlz;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
 import java.nio.ByteBuffer;
 
 /**

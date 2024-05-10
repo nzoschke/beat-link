@@ -1,6 +1,6 @@
 package org.deepsymmetry.beatlink.data;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Represents a track color label. This is a specialized {@link SearchableItem}, since in addition to a specific color,
