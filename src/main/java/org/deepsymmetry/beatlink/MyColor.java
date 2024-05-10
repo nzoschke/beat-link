@@ -1,7 +1,9 @@
 package org.deepsymmetry.beatlink;
 
+import com.google.code.appengine.awt.Color;
+
 public class MyColor {
-  private java.awt.Color color;
+  private Color color;
 
   public static final MyColor white     = new MyColor(255, 255, 255);
   public static final MyColor black     = new MyColor(0, 0, 0);
@@ -14,14 +16,14 @@ public class MyColor {
   public static final MyColor blue      = new MyColor(0, 0, 255);
 
   public MyColor(int r, int g, int b) {
-    this.color = new java.awt.Color(r, g, b);
+    this.color = new Color(r, g, b);
   }
 
   public MyColor(int r, int g, int b, int a) {
-    this.color = new java.awt.Color(r, g, b, a);
+    this.color = new Color(r, g, b, a);
   }
 
-  public MyColor(java.awt.Color color) {
+  public MyColor(Color color) {
     this.color = color;
   }
 
@@ -41,7 +43,7 @@ public class MyColor {
     return color.getAlpha();
   }
 
-  public java.awt.Color toAWTColor() {
+  public Color toAWTColor() {
     return color;
   }
 

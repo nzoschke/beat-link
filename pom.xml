@@ -67,6 +67,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>fr.opensagres.xdocreport.appengine-awt</groupId>
+            <artifactId>appengine-awt</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.deepsymmetry</groupId>
             <artifactId>electro</artifactId>
             <version>0.1.4</version>
