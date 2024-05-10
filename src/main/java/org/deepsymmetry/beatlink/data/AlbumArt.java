@@ -3,8 +3,6 @@ package org.deepsymmetry.beatlink.data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -49,17 +47,12 @@ public class AlbumArt {
      *
      * @return the newly-created image, ready to be drawn
      */
-    public BufferedImage getImage() {
+    public ByteArrayInputStream getImage() {
         ByteBuffer artwork = getRawBytes();
         artwork.rewind();
         byte[] imageBytes = new byte[artwork.remaining()];
         artwork.get(imageBytes);
-        try {
-            return ImageIO.read(new ByteArrayInputStream(imageBytes));
-        } catch (IOException e) {
-            logger.error("Weird! Caught exception creating image from artwork bytes", e);
-            return null;
-        }
+        return new ByteArrayInputStream(imageBytes);
     }
 
     /**
